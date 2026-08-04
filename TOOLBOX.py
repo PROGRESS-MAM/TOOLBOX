@@ -6,14 +6,6 @@ from pathlib import Path
 import json
 import FlowAPI
 
-
-
-
-# --------- FUNC HELPER---------
-
-
-
-
 # --------- FUNC MAIN---------
 def link_api(api):
     env_path = Path(__file__).parent / "cred.env"
