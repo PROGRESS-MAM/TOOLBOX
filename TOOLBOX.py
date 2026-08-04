@@ -8,7 +8,7 @@ import FlowAPI
 
 # --------- FUNC MAIN---------
 def link_api(api):
-    env_path = Path(__file__).parent / "cred.env"
+    env_path = Path(__file__).parent.parent / "cred.env"
     load_dotenv(env_path)
 
     if api == "metadata":
