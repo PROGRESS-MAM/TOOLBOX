@@ -1,4 +1,4 @@
-## Git Submodule
+# Git Submodule
 
 Um das Tool-Repository als Submodule hinzuzufügen, verwende:
 
