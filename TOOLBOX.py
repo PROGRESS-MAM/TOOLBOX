@@ -20,7 +20,7 @@ def link_api(api):
 
 
 def write_log(log_name, message):
-    log_path = Path(__file__).parent / log_name
+    log_path = Path(__file__).parent.parent / log_name
     log_path.touch(exist_ok=True)
     timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     with open(log_path, "a") as log_file:
