@@ -61,3 +61,13 @@ def get_duration_hours_from_tc(tc_start, tc_end):
     hours = seconds / 3600.0
 
     return f"{hours:.4f}"
+
+
+def remove_newline(row: dict) -> dict:
+    cleaned = {}
+    for k, v in row.items():
+        if isinstance(v, str):
+            cleaned[k] = v.replace("\r\n", " ").replace("\n", " ").replace("\r", " ")
+        else:
+            cleaned[k] = v
+    return cleaned
