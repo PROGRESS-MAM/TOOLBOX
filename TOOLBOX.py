@@ -7,7 +7,7 @@ import json
 import FlowAPI
 
 # --------- FUNC MAIN---------
-def link_api(api):
+def tb_link_api(api):
     env_path = Path(__file__).parent.parent / "cred.env"
     load_dotenv(env_path)
 
@@ -19,7 +19,7 @@ def link_api(api):
     return None
 
 
-def write_log(log_name, message):
+def tb_write_log(log_name, message):
     log_path = Path(__file__).parent.parent / log_name
     log_path.touch(exist_ok=True)
     timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -27,14 +27,14 @@ def write_log(log_name, message):
         log_file.write(f"{timestamp}: {message}\n")
 
 
-def save_clip_metadata_to_json(clip_metadata):
+def tb_save_clip_metadata_to_json(clip_metadata):
     clip_id = clip_metadata[0]["clip_id"]
     file_name = f"clip_metadata_{clip_id}.json"
     with open(file_name, "w", encoding="utf-8") as file:
         json.dump(clip_metadata, file, ensure_ascii=False, indent=4)
 
 
-def get_duration_hours_from_tc(tc_start, tc_end):
+def tb_get_duration_hours_from_tc(tc_start, tc_end):
     if tc_start is None or tc_end is None:
         return None
 
@@ -63,7 +63,7 @@ def get_duration_hours_from_tc(tc_start, tc_end):
     return f"{hours:.4f}"
 
 
-def remove_newline(row: dict) -> dict:
+def tb_remove_newline(row: dict) -> dict:
     cleaned = {}
     for k, v in row.items():
         if isinstance(v, str):
@@ -71,3 +71,11 @@ def remove_newline(row: dict) -> dict:
         else:
             cleaned[k] = v
     return cleaned
+
+
+def tb_make_path(subfolder: str, prefix: str, suffix: str) -> str:
+    mainfolder = Path(__file__).parent / subfolder
+    mainfolder.mkdir(parents=True, exist_ok=True)
+    fullpath = mainfolder / f"{prefix}__{suffix}"
+
+    return fullpath
