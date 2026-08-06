@@ -59,7 +59,6 @@ def tb_get_duration_hours_from_tc(tc_start, tc_end):
     diff = end_ms - start_ms
     seconds = diff / 1000.0
     hours = seconds / 3600.0
-
     return f"{hours:.4f}"
 
 
@@ -77,5 +76,4 @@ def tb_make_path(subfolder: str, prefix: str, suffix: str) -> str:
     mainfolder = Path(__file__).parent / subfolder
     mainfolder.mkdir(parents=True, exist_ok=True)
     fullpath = mainfolder / f"{prefix}__{suffix}"
-
     return fullpath
