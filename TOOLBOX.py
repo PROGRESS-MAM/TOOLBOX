@@ -1,3 +1,20 @@
+'''
+This is our universal toolbox for code to be reused in our apps.
+
+
+TOOLBOX RULES:
+- never commit without talking to Thao and Martin
+
+- each function name always starts with "tb_"
+
+- increase TOOLBOX VERSION for each commit
+
+'''
+
+
+TOOLBOX_VERSION = 0.1
+
+
 # --------- IMPORTS ---------
 import os
 import datetime
