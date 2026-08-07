@@ -4,22 +4,15 @@ Gemeinsame Funktionssammlung für interne Projekte.
 
 ## Vorbereitung für Nutzung in anderen Repos
 
-1. In `pyproject.toml` Release-Version anpassen:
+1. In `pyproject.toml` Release-Version erhöhen:
 
    ```toml
    [project]
    version = "x.x.x"
    ```
 
-2. Changes committen und pushen:
-
-   ```bash
-   git add -A
-   git commit -m "Toolbox als Paket aufsetzen"
-   git push
-   ```
-
-3. Auf GitHub ein Release mit Tag erstellen - gleiche Version wie in yaml.  
+2. Changes committen und pushen
+ 
 
 ## Nutzung in anderen Repos
 
