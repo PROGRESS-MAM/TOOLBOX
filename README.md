@@ -26,7 +26,7 @@ Gemeinsame Funktionssammlung für interne Projekte.
 1. In deinem Projekt eine `requirements.txt` anlegen:
 
    ```text
-   toolbox @ git+https://github.com/PROGRESS-MAM/TOOLBOX.git
+   toolbox @ git+https://github.com/PROGRESS-MAM/TOOLBOX.git@main
    ```
 
 2. Toolbox installieren:
