@@ -20,14 +20,13 @@ Gemeinsame Funktionssammlung für interne Projekte.
    ```
 
 3. Auf GitHub ein Release mit Tag erstellen - gleiche Version wie in yaml.  
-   Dieses Tag wird in den Consumer-Repos in `requirements.txt` verwendet.
 
 ## Nutzung in anderen Repos
 
 1. In deinem Projekt eine `requirements.txt` anlegen:
 
    ```text
-   toolbox @ git+https://github.com/PROGRESS-MAM/TOOLBOX.git@v0.1.0
+   toolbox @ git+https://github.com/PROGRESS-MAM/TOOLBOX.git
    ```
 
    Passe die Version an das gewünschte Release an.
