@@ -7,12 +7,13 @@ TOOLBOX RULES:
 
 - each function name always starts with "tb_"
 
+- always add a docstring
+
 - increase TOOLBOX VERSION for each commit
 
 '''
 
-
-TOOLBOX_VERSION = 0.1
+TOOLBOX_VERSION = "0.1.2"
 
 
 # --------- IMPORTS ---------
@@ -21,12 +22,20 @@ import datetime
 from dotenv import load_dotenv
 from pathlib import Path
 import json
+from typing import Any, Literal
 import FlowAPI
 
 # --------- FUNC MAIN---------
-def tb_link_api(api):
+def tb_link_api(api: Literal["metadata", "ark", "storage"]) -> Any | None:
     '''
-    metadate, ark, storage
+    Create and return a Flow API gateway instance for the selected API.
+
+    Args:
+        api: The API name to connect to. 
+        Supported values: "metadata", "ark", "storage".
+
+    Returns:
+        An API gateway instance for the selected service, or None if no matching implementation exists.
     '''
     env_path = Path(__file__).parent / "cred.env"
     load_dotenv(env_path)
@@ -34,12 +43,23 @@ def tb_link_api(api):
     if api == "metadata":
         return FlowAPI.Metadata.create_gateway_instance(
             os.environ.get("FLOW_USER"), os.environ.get("FLOW_PASSWORD"), os.environ.get("FLOW_HOST")
-
         )
+    elif api == "ark":
+        pass
+
+    elif api == "storage":
+        pass
     return None
 
 
-def tb_write_log(log_name, message):
+def tb_write_log(log_name: str, message: str) -> None:
+    '''
+    Create a log file if it does not already exist and append a timestamped message.
+
+    Args:
+        log_name: Name of the log file to create or update.
+        message: Message content to write to the log.
+    '''
     log_path = Path(__file__).parent / log_name
     log_path.touch(exist_ok=True)
     timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -47,14 +67,30 @@ def tb_write_log(log_name, message):
         log_file.write(f"{timestamp}: {message}\n")
 
 
-def tb_save_clip_metadata_to_json(clip_metadata):
+def tb_save_clip_metadata_to_json(clip_metadata: list[dict[str, Any]]) -> None:
+    '''
+    Save clip metadata to a JSON file in the current working directory.
+
+    Args:
+        clip_metadata: A collection of clip metadata entries to serialize.
+    '''
     clip_id = clip_metadata[0]["clip_id"]
     file_name = f"clip_metadata_{clip_id}.json"
     with open(file_name, "w", encoding="utf-8") as file:
         json.dump(clip_metadata, file, ensure_ascii=False, indent=4)
 
 
-def tb_get_duration_hours_from_tc(tc_start, tc_end):
+def tb_get_duration_hours_from_tc(tc_start: str, tc_end: str) -> str | None:
+    '''
+    Calculate the duration between two timecode values in hours.
+
+    Args:
+        tc_start: Starting timecode in hh:mm:ss:ff/fps format.
+        tc_end: Ending timecode in hh:mm:ss:ff/fps format.
+
+    Returns:
+        A string representation of the duration in hours, or None if either input is missing.
+    '''
     if tc_start is None or tc_end is None:
         return None
 
@@ -82,7 +118,16 @@ def tb_get_duration_hours_from_tc(tc_start, tc_end):
     return f"{hours:.4f}"
 
 
-def tb_remove_newline(row: dict) -> dict:
+def tb_remove_newline(row: dict[str, Any]) -> dict[str, Any]:
+    '''
+    Replace newline characters in string values with spaces.
+
+    Args:
+        row: Dictionary containing values that may include line breaks.
+
+    Returns:
+        A new dictionary with newline characters removed from string values.
+    '''
     cleaned = {}
     for k, v in row.items():
         if isinstance(v, str):
@@ -92,7 +137,18 @@ def tb_remove_newline(row: dict) -> dict:
     return cleaned
 
 
-def tb_make_path(subfolder: str, prefix: str, suffix: str) -> str:
+def tb_make_path(subfolder: str, prefix: str, suffix: str) -> Path:
+    '''
+    Create a folder and return a full path using the provided prefix and suffix.
+
+    Args:
+        subfolder: Subfolder name to create relative to the toolbox directory.
+        prefix: Path prefix to include in the filename.
+        suffix: Path suffix to include in the filename, typically including the extension.
+
+    Returns:
+        A Path object pointing to the generated file path.
+    '''
     mainfolder = Path(__file__).parent / subfolder
     mainfolder.mkdir(parents=True, exist_ok=True)
     fullpath = mainfolder / f"{prefix}__{suffix}"
