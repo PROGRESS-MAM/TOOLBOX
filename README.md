@@ -29,8 +29,6 @@ Gemeinsame Funktionssammlung für interne Projekte.
    toolbox @ git+https://github.com/PROGRESS-MAM/TOOLBOX.git
    ```
 
-   Passe die Version an das gewünschte Release an.
-
 2. Toolbox installieren:
 
    ```bash
