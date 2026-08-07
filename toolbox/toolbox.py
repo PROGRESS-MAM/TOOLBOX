@@ -21,11 +21,10 @@ import datetime
 from dotenv import load_dotenv
 from pathlib import Path
 import json
-from typing import Literal
 import FlowAPI
 
 # --------- FUNC MAIN---------
-def tb_link_api(api: Literal["metadata", "ark"]):
+def tb_link_api(api):
     env_path = Path(__file__).parent / "cred.env"
     load_dotenv(env_path)
 
