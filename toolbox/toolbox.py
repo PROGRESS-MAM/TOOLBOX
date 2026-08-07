@@ -25,6 +25,9 @@ import FlowAPI
 
 # --------- FUNC MAIN---------
 def tb_link_api(api):
+    '''
+    metadate, ark, storage
+    '''
     env_path = Path(__file__).parent / "cred.env"
     load_dotenv(env_path)
 
