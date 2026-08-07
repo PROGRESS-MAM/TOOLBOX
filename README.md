@@ -44,7 +44,7 @@ Gemeinsame Funktionssammlung für interne Projekte.
    from toolbox import ...
    ```
 
-## Updates
+## Updates in anderen Repos
 
 Bei einem neuen Release die Version in `requirements.txt` anpassen und erneut installieren:
 
