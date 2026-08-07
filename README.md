@@ -22,7 +22,7 @@ Gemeinsame Funktionssammlung für interne Projekte.
 3. Auf GitHub ein Release mit Tag erstellen - gleiche Version wie in yaml.  
    Dieses Tag wird in den Consumer-Repos in `requirements.txt` verwendet.
 
-## Nutzung in Consumer-Repos
+## Nutzung in anderen Repos
 
 1. In deinem Projekt eine `requirements.txt` anlegen:
 
