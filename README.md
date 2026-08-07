@@ -1,21 +1,53 @@
-# Git Submodule
+# TOOLBOX
 
-Um das Tool-Repository als Submodule hinzuzufügen, verwende:
+Gemeinsame Funktionssammlung für interne Projekte.
+
+## Vorbereitung für Nutzung in anderen Repos
+
+1. In `pyproject.toml` Release-Version anpassen:
+
+   ```toml
+   [project]
+   version = "x.x.x"
+   ```
+
+2. Changes committen und pushen:
+
+   ```bash
+   git add -A
+   git commit -m "Toolbox als Paket aufsetzen"
+   git push
+   ```
+
+3. Auf GitHub ein Release mit Tag erstellen - gleiche Version wie in yaml.  
+   Dieses Tag wird in den Consumer-Repos in `requirements.txt` verwendet.
+
+## Nutzung in Consumer-Repos
+
+1. In deinem Projekt eine `requirements.txt` anlegen:
+
+   ```text
+   toolbox @ git+https://github.com/PROGRESS-MAM/TOOLBOX.git@v0.1.0
+   ```
+
+   Passe die Version an das gewünschte Release an.
+
+2. Toolbox installieren:
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+3. In deinem Python-Code importieren:
+
+   ```python
+   from toolbox import ...
+   ```
+
+## Updates
+
+Bei einem neuen Release die Version in `requirements.txt` anpassen und erneut installieren:
 
 ```bash
-git submodule add https://github.com/PROGRESS-MAM/TOOLBOX.git TOOLBOX
-git commit -m "Add TOOLBOX as submodule"
-git push
-```
-
-Wenn du das Submodule später aktualisieren möchtest:
-
-```bash
-git submodule update --remote
-```
-
-Um das Submodule initial zu laden, wenn es schon im Repository existiert:
-
-```bash
-git submodule update --init --recursive
+pip install -r requirements.txt --upgrade
 ```
