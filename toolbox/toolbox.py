@@ -25,7 +25,7 @@ import FlowAPI
 
 # --------- FUNC MAIN---------
 def tb_link_api(api):
-    env_path = Path(__file__).parent.parent / "cred.env"
+    env_path = Path(__file__).parent / "cred.env"
     load_dotenv(env_path)
 
     if api == "metadata":
@@ -37,7 +37,7 @@ def tb_link_api(api):
 
 
 def tb_write_log(log_name, message):
-    log_path = Path(__file__).parent.parent / log_name
+    log_path = Path(__file__).parent / log_name
     log_path.touch(exist_ok=True)
     timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     with open(log_path, "a") as log_file:
