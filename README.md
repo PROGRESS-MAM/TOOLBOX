@@ -46,5 +46,5 @@ Gemeinsame Funktionssammlung für interne Projekte.
 Bei einem neuen Release die Version in `requirements.txt` anpassen und erneut installieren:
 
 ```bash
-pip install -r requirements.txt --upgrade
+python -m pip install --upgrade -r requirements.txt
 ```
