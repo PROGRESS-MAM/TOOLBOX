@@ -31,8 +31,7 @@ def tb_link_api(api: Literal["metadata", "ark", "storage"]) -> Any | None:
     Create and return a Flow API gateway instance for the selected API.
 
     Args:
-        api: The API name to connect to. 
-        Supported values: "metadata", "ark", "storage".
+        api: The API name to connect to. Supported values: "metadata", "ark", "storage".
 
     Returns:
         An API gateway instance for the selected service, or None if no matching implementation exists.
