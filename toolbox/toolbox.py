@@ -13,7 +13,7 @@ TOOLBOX RULES:
 
 '''
 
-TOOLBOX_VERSION = "0.1.2"
+TOOLBOX_VERSION = "0.1.3"
 
 
 # --------- IMPORTS ---------
@@ -26,14 +26,13 @@ from typing import Any, Literal
 import FlowAPI
 
 # --------- FUNC MAIN---------
-def tb_link_api(api: str) -> Any | None:
+def tb_link_api(env_path: Path, api: str) -> Any | None:
     '''
     Create and return a Flow API gateway instance for the selected API.
 
     Supported values for api:
         metadata, ark, storage
     '''
-    env_path = Path(__file__).parent / "cred.env"
     load_dotenv(env_path)
 
     if api == "metadata":
@@ -63,7 +62,7 @@ def tb_save_clip_metadata_to_json(clip_metadata: list[dict[str, Any]]) -> None:
     '''
     Save clip metadata to a JSON file in the current working directory.
     '''
-    clip_id = clip_metadata[0]["clip_id"]
+    clip_id = clip_metadata["clip_id"]
     file_name = f"clip_metadata_{clip_id}.json"
     with open(file_name, "w", encoding="utf-8") as file:
         json.dump(clip_metadata, file, ensure_ascii=False, indent=4)
