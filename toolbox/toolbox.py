@@ -13,7 +13,7 @@ TOOLBOX RULES:
 
 '''
 
-TOOLBOX_VERSION = "0.1.3"
+TOOLBOX_VERSION = "0.1.4"
 
 
 # --------- IMPORTS ---------
@@ -47,24 +47,24 @@ def tb_link_api(env_path: Path, api: str) -> Any | None:
     return None
 
 
-def tb_write_log(log_name: str, message: str) -> None:
+def tb_write_log(log_path: Path, message: str) -> None:
     '''
     Create a log_name file if it does not already exist and append a timestamped message.
     '''
-    log_path = Path(__file__).parent / log_name
     log_path.touch(exist_ok=True)
     timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     with open(log_path, "a") as log_file:
         log_file.write(f"{timestamp}: {message}\n")
 
 
-def tb_save_clip_metadata_to_json(clip_metadata: list[dict[str, Any]]) -> None:
+def tb_save_clip_metadata_to_json(save_path: Path, clip_metadata: list[dict[str, Any]]) -> None:
     '''
     Save clip metadata to a JSON file in the current working directory.
     '''
-    clip_id = clip_metadata["clip_id"]
+    clip_id = clip_metadata[0]["clip_id"]
     file_name = f"clip_metadata_{clip_id}.json"
-    with open(file_name, "w", encoding="utf-8") as file:
+    file_path = Path(save_path) / file_name
+    with open(file_path, "w", encoding="utf-8") as file:
         json.dump(clip_metadata, file, ensure_ascii=False, indent=4)
 
 
@@ -116,13 +116,13 @@ def tb_remove_newline(row: dict[str, Any]) -> dict[str, Any]:
     return cleaned
 
 
-def tb_make_path(subfolder: str, prefix: str, suffix: str) -> Path:
+def tb_make_path(mainfolder: str, subfolder: str, prefix: str, suffix: str) -> Path:
     '''
     Create a folder and return a full path using the provided prefix and suffix.
     
     Suffix should include file extension.
     '''
-    mainfolder = Path(__file__).parent / subfolder
-    mainfolder.mkdir(parents=True, exist_ok=True)
-    fullpath = mainfolder / f"{prefix}__{suffix}"
+    root = Path(mainfolder) / subfolder
+    root.mkdir(parents=True, exist_ok=True)
+    fullpath = root / f"{prefix}__{suffix}"
     return fullpath
