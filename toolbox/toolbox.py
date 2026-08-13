@@ -13,7 +13,7 @@ TOOLBOX RULES:
 
 '''
 
-TOOLBOX_VERSION = "0.1.4"
+TOOLBOX_VERSION = "0.1.5"
 
 
 # --------- IMPORTS ---------
@@ -53,7 +53,7 @@ def tb_write_log(log_path: Path, message: str) -> None:
     '''
     log_path.touch(exist_ok=True)
     timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    with open(log_path, "a") as log_file:
+    with open(log_path, "a", encoding="utf-8") as log_file:
         log_file.write(f"{timestamp}: {message}\n")
 
 
