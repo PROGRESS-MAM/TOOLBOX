@@ -1,15 +1,16 @@
 '''
 This is our universal toolbox for code to be reused in our apps.
 
-
 TOOLBOX RULES:
 - never commit without talking to Thao and Martin
 
 - each function name always starts with "tb_"
 
+- functions for internal use only start with "_" and are not exported
+
 - always add a docstring
 
-- increase TOOLBOX VERSION for each commit
+- increase TOOLBOX VERSION for each commit, it is also the package version
 
 '''
 
@@ -22,7 +23,7 @@ import datetime
 from dotenv import load_dotenv
 from pathlib import Path
 import json
-from typing import Any, Literal
+from typing import Any
 import FlowAPI
 
 # --------- FUNC MAIN---------
@@ -126,3 +127,10 @@ def tb_make_path(mainfolder: str, subfolder: str, prefix: str, suffix: str) -> P
     root.mkdir(parents=True, exist_ok=True)
     fullpath = root / f"{prefix}__{suffix}"
     return fullpath
+
+
+
+
+
+# --------- KEEP THIS LINE AT THE END ---------
+__all__ = [name for name in dir() if name.startswith("tb_")]

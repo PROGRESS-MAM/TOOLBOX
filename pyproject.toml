@@ -2,12 +2,20 @@
 requires = ["setuptools>=61", "wheel"]
 build-backend = "setuptools.build_meta"
 
+
 [project]
 name = "toolbox"
-version = "0.1.5"
 description = "Gemeinsame Funktionssammlung"
 readme = "README.md"
 requires-python = ">=3.11"
+dynamic = ["version"]
+dependencies = [
+    "python-dotenv",
+    "editshare-flow-api~=2026.2.1.0",
+]
+
+[tool.setuptools.dynamic]
+version = {attr = "toolbox.toolbox.TOOLBOX_VERSION"}
 
 [tool.setuptools.packages.find]
 where = ["."]

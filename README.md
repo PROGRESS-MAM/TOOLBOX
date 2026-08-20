@@ -2,42 +2,48 @@
 
 Gemeinsame Funktionssammlung für interne Projekte.
 
-## Vorbereitung für Nutzung in anderen Repos
+## Installation
 
-1. In `pyproject.toml` Release-Version erhöhen:
+Einmal pro Maschine Flow-API URL linken:
 
-   ```toml
-   [project]
-   version = "x.x.x"
-   ```
+```bash
+pip config set global.extra-index-url https://artifacts.editshare.com/artifactory/api/pypi/editshare-pypi-public/simple
+```
 
-2. Changes committen und pushen
- 
+Danach die Toolbox installieren:
 
-## Nutzung in anderen Repos
+```bash
+pip install "toolbox @ git+https://github.com/PROGRESS-MAM/TOOLBOX.git@main"
+```
 
-1. In deinem Projekt eine `requirements.txt` anlegen:
+## Verwendung
 
-   ```text
-   toolbox @ git+https://github.com/PROGRESS-MAM/TOOLBOX.git@main
-   ```
+```python
+from toolbox import tb_link_api, tb_write_log
 
-2. Toolbox installieren:
+api = tb_link_api(cred_path, "metadata")
+tb_write_log(log_path, "Verbindung steht")
+```
 
-   ```bash
-   pip install -r requirements.txt
-   ```
+Oder alle Funktionen mit einmal:
 
-3. In deinem Python-Code importieren:
+```python
+import toolbox
+print(toolbox.__version__)      # gleich TOOLBOX_VERSION
+```
+
+## Neues Release
+
+1. In `toolbox/toolbox.py` die Version erhöhen:
 
    ```python
-   from toolbox import ...
+   TOOLBOX_VERSION = "0.1.6"
    ```
+
+2. Changes committen und pushen.
 
 ## Updates in anderen Repos
 
-Bei einem neuen Release die Version in `requirements.txt` anpassen und erneut installieren:
-
 ```bash
-python -m pip install --upgrade -r requirements.txt
+pip install --force-reinstall --no-deps "toolbox @ git+https://github.com/PROGRESS-MAM/TOOLBOX.git@main"
 ```
