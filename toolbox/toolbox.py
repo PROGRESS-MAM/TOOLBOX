@@ -14,7 +14,7 @@ TOOLBOX RULES:
 
 '''
 
-TOOLBOX_VERSION = "0.1.5"
+TOOLBOX_VERSION = "0.1.6"
 
 
 # --------- IMPORTS ---------
@@ -125,7 +125,7 @@ def tb_make_path(mainfolder: str, subfolder: str, filename: str) -> Path:
     '''
     root = Path(mainfolder) / subfolder
     root.mkdir(parents=True, exist_ok=True)
-    fullpath = root / f"{filename}"
+    fullpath = root / filename
     return fullpath
 
 
