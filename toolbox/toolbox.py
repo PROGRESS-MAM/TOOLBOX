@@ -117,15 +117,15 @@ def tb_remove_newline(row: dict[str, Any]) -> dict[str, Any]:
     return cleaned
 
 
-def tb_make_path(mainfolder: str, subfolder: str, prefix: str, suffix: str) -> Path:
+def tb_make_path(mainfolder: str, subfolder: str, filename: str) -> Path:
     '''
-    Create a folder and return a full path using the provided prefix and suffix.
+    Create a folder and return a full path using the filename.
     
-    Suffix should include file extension.
+    Filemname should include file extension.
     '''
     root = Path(mainfolder) / subfolder
     root.mkdir(parents=True, exist_ok=True)
-    fullpath = root / f"{prefix}__{suffix}"
+    fullpath = root / f"{filename}"
     return fullpath
 
 
