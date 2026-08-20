@@ -14,7 +14,7 @@ TOOLBOX RULES:
 
 '''
 
-TOOLBOX_VERSION = "0.1.6"
+TOOLBOX_VERSION = "0.1.7"
 
 
 # --------- IMPORTS ---------
@@ -52,7 +52,7 @@ def tb_write_log(log_path: Path, message: str) -> None:
     '''
     Create a log_name file if it does not already exist and append a timestamped message.
     '''
-    log_path.touch(exist_ok=True)
+    log_path.parent.mkdir(parents=True, exist_ok=True)
     timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     with open(log_path, "a", encoding="utf-8") as log_file:
         log_file.write(f"{timestamp}: {message}\n")
