@@ -45,5 +45,5 @@ print(toolbox.__version__)      # gleich TOOLBOX_VERSION
 ## Updates in anderen Repos
 
 ```bash
-pip install --force-reinstall --no-deps "toolbox @ git+https://github.com/PROGRESS-MAM/TOOLBOX.git@main"
+pip install --force-reinstall "toolbox @ git+https://github.com/PROGRESS-MAM/TOOLBOX.git@main"
 ```
