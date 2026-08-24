@@ -14,7 +14,7 @@ TOOLBOX RULES:
 
 '''
 
-TOOLBOX_VERSION = "0.2.1"
+TOOLBOX_VERSION = "0.2.2"
 
 
 # --------- IMPORTS ---------
@@ -23,17 +23,45 @@ import datetime
 from dotenv import load_dotenv
 from pathlib import Path
 import json
-from typing import Any
+from typing import Any, Literal, overload
 import FlowAPI
 import ArkAPI
 
 # --------- FUNC MAIN---------
+
+
+# Die Overloads legen pro api-Wert den konkreten Rueckgabetyp fest.
+# Ohne sie sieht der Aufrufer nur Any und bekommt weder
+# Autovervollstaendigung noch Docstrings der API-Klassen. Zur Laufzeit
+# haben sie keine Wirkung: typing.overload verwirft die Stubs, es gilt
+# allein die letzte Definition.
+@overload
+def tb_link_api(env_path: Path, api: Literal["ark"]) -> ArkAPI.Ark | None: ...
+
+
+@overload
+def tb_link_api(
+    env_path: Path, api: Literal["metadata"]
+) -> FlowAPI.Metadata | None: ...
+
+
+@overload
+def tb_link_api(env_path: Path, api: Literal["storage"]) -> None: ...
+
+
+@overload
+def tb_link_api(env_path: Path, api: str) -> Any | None: ...
+
+
 def tb_link_api(env_path: Path, api: str) -> Any | None:
     '''
     Create and return a Flow API gateway instance for the selected API.
 
     Supported values for api:
         metadata, ark, storage
+
+    Returns None for an unknown api value and for storage, which is not
+    implemented yet.
     '''
     load_dotenv(env_path)
 
@@ -134,6 +162,18 @@ def tb_make_path(mainfolder: str, subfolder: str, filename: str) -> Path:
 
 
 
-
 # --------- KEEP THIS LINE AT THE END ---------
-__all__ = [name for name in dir() if name.startswith("tb_")]
+# Explizit gepflegt, nicht ueber dir() erzeugt: ein zur Laufzeit
+# gebautes __all__ kann ein Type Checker nicht auswerten, und unter
+# Python vor 3.12 bleibt es leer, weil Comprehensions dort einen eigenen
+# Scope haben und dir() nur deren lokale Namen liefert. Neue tb_-Funktion:
+# hier eintragen.
+__all__ = [
+    "TOOLBOX_VERSION",
+    "tb_get_duration_hours_from_tc",
+    "tb_link_api",
+    "tb_make_path",
+    "tb_remove_newline",
+    "tb_save_clip_metadata_to_json",
+    "tb_write_log",
+]
