@@ -14,7 +14,7 @@ TOOLBOX RULES:
 
 '''
 
-TOOLBOX_VERSION = "0.2.0"
+TOOLBOX_VERSION = "0.2.1"
 
 
 # --------- IMPORTS ---------
