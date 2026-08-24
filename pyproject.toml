@@ -12,6 +12,8 @@ dynamic = ["version"]
 dependencies = [
     "python-dotenv",
     "editshare-flow-api~=2026.2.1.0",
+    "ArkAPI @ git+https://github.com/PROGRESS-MAM/ES-Ark-API.git@main",
+]
 ]
 
 [tool.setuptools.dynamic]

@@ -14,7 +14,7 @@ TOOLBOX RULES:
 
 '''
 
-TOOLBOX_VERSION = "0.1.7"
+TOOLBOX_VERSION = "0.2.0"
 
 
 # --------- IMPORTS ---------
@@ -25,6 +25,7 @@ from pathlib import Path
 import json
 from typing import Any
 import FlowAPI
+import ArkAPI
 
 # --------- FUNC MAIN---------
 def tb_link_api(env_path: Path, api: str) -> Any | None:
@@ -41,7 +42,9 @@ def tb_link_api(env_path: Path, api: str) -> Any | None:
             os.environ.get("FLOW_USER"), os.environ.get("FLOW_PASSWORD"), os.environ.get("FLOW_HOST")
         )
     elif api == "ark":
-        pass
+        return ArkAPI.Ark.create_instance(
+            os.environ.get("ARK_USER"), os.environ.get("ARK_PASSWORD"), os.environ.get("ARK_HOST"),
+        )
 
     elif api == "storage":
         pass
