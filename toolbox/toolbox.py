@@ -14,7 +14,7 @@ TOOLBOX RULES:
 
 '''
 
-TOOLBOX_VERSION = "0.2.2"
+TOOLBOX_VERSION = "0.2.3"
 
 
 # --------- IMPORTS ---------
@@ -112,7 +112,7 @@ def tb_get_duration_hours_from_tc(tc_start: str, tc_end: str) -> str | None:
         return None
 
     def parse_tc_to_ms(tc_value):
-        time_part, _ = tc_value.rsplit("/", 1)
+        time_part, fps = tc_value.rsplit("/", 1)
         parts = time_part.split(":")
 
         hh, mm, ss, ff, fps = parts
