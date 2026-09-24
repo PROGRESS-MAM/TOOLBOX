@@ -14,7 +14,7 @@ TOOLBOX RULES:
 
 '''
 
-TOOLBOX_VERSION = "0.2.3"
+TOOLBOX_VERSION = "0.2.5"
 
 
 # --------- IMPORTS ---------
@@ -22,6 +22,7 @@ import os
 import datetime
 from dotenv import load_dotenv
 from pathlib import Path
+from fractions import Fraction
 import json
 from typing import Any, Literal, overload
 import FlowAPI
@@ -101,38 +102,42 @@ def tb_save_clip_metadata_to_json(save_path: Path, clip_metadata: list[dict[str,
 
 
 def tb_get_duration_hours_from_tc(tc_start: str, tc_end: str) -> str | None:
-    '''
-    Calculate the duration between two timecode values in hours.
-    
-    TC format:
-        hh:mm:ss:ff/fps
+    """Return elapsed hours from two timecodes or None for an invalid pair.
 
-    '''
-    if tc_start is None or tc_end is None:
+    Accept hh:mm:ss:ff/fps and hh:mm:ss:ff:rate_n/rate_d. An optional nd
+    suffix is ignored; HH:MM:SS represent clock time, without drop-frame
+    or 24-hour rollover correction.
+    """
+    if not isinstance(tc_start, str) or not isinstance(tc_end, str):
         return None
 
-    def parse_tc_to_ms(tc_value):
-        time_part, fps = tc_value.rsplit("/", 1)
-        parts = time_part.split(":")
+    def parse_tc(tc_value: str) -> tuple[Fraction, Fraction] | None:
+        tokens = tc_value.strip().split()
+        if len(tokens) not in (1, 2) or (len(tokens) == 2 and tokens[1].casefold() != "nd"):
+            return None
+        body, separator, rate_tail = tokens[0].partition("/")
+        parts = body.split(":")
+        if not separator or len(parts) not in (4, 5) or not all(
+            part.isascii() and part.isdecimal() for part in (*parts, rate_tail)
+        ):
+            return None
 
-        hh, mm, ss, ff, fps = parts
-        hh = int(hh)
-        mm = int(mm)
-        ss = int(ss)
-        ff = int(ff)
-        fps = int(fps)
+        hours, minutes, seconds, frames = map(int, parts[:4])
+        numerator = int(parts[4] if len(parts) == 5 else rate_tail)
+        denominator = int(rate_tail) if len(parts) == 5 else 1
+        if numerator < 1 or denominator < 1 or minutes >= 60 or seconds >= 60:
+            return None
+        fps = Fraction(numerator, denominator)
+        if frames >= round(fps):
+            return None
+        time_seconds = Fraction(hours * 3600 + minutes * 60 + seconds) + frames / fps
+        return time_seconds, fps
 
-        total_seconds = hh * 3600 + mm * 60 + ss
-        frame_duration_seconds = 1 / fps
-        total_ms = int((total_seconds * 1000) + (ff * frame_duration_seconds * 1000))
-        return total_ms
-    
-    start_ms = parse_tc_to_ms(tc_start)
-    end_ms = parse_tc_to_ms(tc_end)
-    diff = end_ms - start_ms
-    seconds = diff / 1000.0
-    hours = seconds / 3600.0
-    return f"{hours:.4f}"
+    start = parse_tc(tc_start)
+    end = parse_tc(tc_end)
+    if start is None or end is None or start[1] != end[1] or end[0] < start[0]:
+        return None
+    return f"{float((end[0] - start[0]) / 3600):.8f}"
 
 
 def tb_remove_newline(row: dict[str, Any]) -> dict[str, Any]:
