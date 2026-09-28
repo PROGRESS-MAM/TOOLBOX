@@ -14,7 +14,7 @@ TOOLBOX RULES:
 
 '''
 
-TOOLBOX_VERSION = "0.2.5"
+TOOLBOX_VERSION = "0.2.6"
 
 
 # --------- IMPORTS ---------
@@ -29,8 +29,6 @@ import FlowAPI
 import ArkAPI
 
 # --------- FUNC MAIN---------
-
-
 # Die Overloads legen pro api-Wert den konkreten Rueckgabetyp fest.
 # Ohne sie sieht der Aufrufer nur Any und bekommt weder
 # Autovervollstaendigung noch Docstrings der API-Klassen. Zur Laufzeit
@@ -75,8 +73,10 @@ def tb_link_api(env_path: Path, api: str) -> Any | None:
             os.environ.get("ARK_USER"), os.environ.get("ARK_PASSWORD"), os.environ.get("ARK_HOST"),
         )
 
-    elif api == "storage":
-        pass
+    elif api == "search":
+        return FlowAPI.Search.create_gateway_instance(
+            os.environ.get("FLOW_USER"), os.environ.get("FLOW_PASSWORD"), os.environ.get("FLOW_HOST")
+        )
     return None
 
 
